@@ -1,0 +1,5 @@
+{
+    "dotnet-test-explorer.autoExpandTree": true,
+    "dotnet-test-explorer.runInParallel": true,
+    "dotnet-test-explorer.pathForResultFile": ".\\.vscode\\",
+}
