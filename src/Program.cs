@@ -65,7 +65,11 @@ namespace weighted_uniform_strings
         {
             Console.Clear();
             Console.WriteLine("");
-            Console.WriteLine("Weigh and calc uniform strings in a provided string, determine which query values exist in the calculated uniform string weights.");
+            var descr = @"
+            *****     WEIGHTED UNIFORM STRINGS     *****
+            Weigh and calc uniform strings in a provided string, determine which query values exist in the calculated uniform string weights.
+            ";
+            Console.WriteLine(descr);
             Console.WriteLine("Enter the string to process and weigh...");
             var strToProcess = Console.ReadLine();
             Console.WriteLine("Enter the total number of weights to query for...");
@@ -91,6 +95,7 @@ namespace weighted_uniform_strings
         static void jumpingClouds(Stopwatch sw)
         {
             var descr = $@"     
+            *****     JUMPING CLOUDS     *****
             There is a new mobile game that starts with consecutively numbered clouds. Some of the clouds are thunderheads and others are cumulus.
             The player can jump on any cumulus cloud having a number that is equal to the number of the current cloud plus 1 or 2.
             The player must avoid the thunderheads. Determine the minimum number of jumps it will take to jump from the starting postion to the last cloud. 
@@ -117,7 +122,8 @@ namespace weighted_uniform_strings
 
         static void repeatedString(Stopwatch sw)
         {
-            var descr = $@"     
+            var descr = $@"
+            *****     REPEATED STRING     *****
             There is a string, S, of lowercase English letters that is repeated infinitely many times. 
             Given an integer, N, find and print the number of letter a's in the first  letters of the infinite string.
             Example: S = 'abcac', N = 10
@@ -131,10 +137,10 @@ namespace weighted_uniform_strings
             int chrCount = Convert.ToInt32(Console.ReadLine());
             
             sw.Start();
-            var result = repeatedString.Handle(strToProcess, chrCount);
+            var result = RepeatedString.Handle(strToProcess, chrCount);
             sw.Stop();
             Console.WriteLine($"Elapsed: {sw.Elapsed}");
-            Console.WriteLine($"The shortest path took {result} hops.");
+            Console.WriteLine($"The number of 'a' found is {result}.");
         }
     }    
 }
