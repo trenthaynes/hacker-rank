@@ -24,13 +24,16 @@ namespace weighted_uniform_strings
                 switch (optVal)
                 {
                     case ConsoleKey.NumPad0:
-                        jumpingClouds(_sw);
+                        repeatedString(_sw);
                         break;
                     case ConsoleKey.NumPad1:
                         weightedStrings(_sw);
                         break;
                     case ConsoleKey.NumPad2:
                         jumpingClouds(_sw);
+                        break;
+                    case ConsoleKey.NumPad3:
+                        repeatedString(_sw);
                         break;
                     case ConsoleKey.Escape:
                         done = true;
@@ -44,9 +47,10 @@ namespace weighted_uniform_strings
         {
             var menuOpts = new Dictionary<string, int>
             {
-                {"Newest: Jumping on Clouds", 0},
+                {"Newest: Repeated String", 0},
                 {"Weighted Uniform Strings", 1},
                 {"Jumping on Clouds", 2},
+                {"Repeated String", 3},
             };
 
             Console.WriteLine($"{Environment.NewLine}Enter a menu number:");
@@ -106,6 +110,28 @@ namespace weighted_uniform_strings
             }
             sw.Start();
             var result = JumpingClouds.Handle(clouds);
+            sw.Stop();
+            Console.WriteLine($"Elapsed: {sw.Elapsed}");
+            Console.WriteLine($"The shortest path took {result} hops.");
+        }
+
+        static void repeatedString(Stopwatch sw)
+        {
+            var descr = $@"     
+            There is a string, S, of lowercase English letters that is repeated infinitely many times. 
+            Given an integer, N, find and print the number of letter a's in the first  letters of the infinite string.
+            Example: S = 'abcac', N = 10
+            The substring we consider is 'abcacabcac', the first 10 characters of the infinite string. There are 4 occurrences of 'a; in the substring.{Environment.NewLine}";
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine(descr);
+            Console.WriteLine("Enter the string to repeat...");
+            var strToProcess = Console.ReadLine();
+            Console.WriteLine("the number of characters to consider...");
+            int chrCount = Convert.ToInt32(Console.ReadLine());
+            
+            sw.Start();
+            var result = repeatedString.Handle(strToProcess, chrCount);
             sw.Stop();
             Console.WriteLine($"Elapsed: {sw.Elapsed}");
             Console.WriteLine($"The shortest path took {result} hops.");
