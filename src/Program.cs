@@ -24,7 +24,7 @@ namespace weighted_uniform_strings
                 switch (optVal)
                 {
                     case ConsoleKey.NumPad0:
-                        repeatedString(_sw);
+                        twoDArray(_sw);
                         break;
                     case ConsoleKey.NumPad1:
                         weightedStrings(_sw);
@@ -34,6 +34,9 @@ namespace weighted_uniform_strings
                         break;
                     case ConsoleKey.NumPad3:
                         repeatedString(_sw);
+                        break;
+                    case ConsoleKey.NumPad4:
+                        twoDArray(_sw);
                         break;
                     case ConsoleKey.Escape:
                         done = true;
@@ -47,10 +50,11 @@ namespace weighted_uniform_strings
         {
             var menuOpts = new Dictionary<string, int>
             {
-                {"Newest: Repeated String", 0},
+                {"Newest: 2D Array DS", 0},
                 {"Weighted Uniform Strings", 1},
                 {"Jumping on Clouds", 2},
                 {"Repeated String", 3},
+                {"2D Array DS", 4},
             };
 
             Console.WriteLine($"{Environment.NewLine}Enter a menu number:");
@@ -61,6 +65,54 @@ namespace weighted_uniform_strings
             Console.WriteLine("");
         }
 
+        static void twoDArray(Stopwatch sw)
+        {
+            var descr = $@"
+            *****     2D Array - DS     *****
+            Given a 6x6 2D array, Arr.
+            1 1 1 0 0 0
+            0 1 0 0 0 0
+            1 1 1 0 0 0
+            0 0 0 0 0 0
+            0 0 0 0 0 0
+            0 0 0 0 0 0
+
+            An hourglass in A is a subset of values with indices falling in this pattern in Arr's graphical representation.
+            a b c
+              d
+            e f g
+
+            There are 16 hourglass in Arr.  An hourglass sum is the sum of the values at each indices. Print the maximum hourglass sum in Arr.
+            The array will always be 6x6.
+
+            Arr = 
+            -9 -9 -9  1  1  1
+             0 -9  0  4  3  2
+            -9 -9 -9  1  2  3
+             0  0  8  6  6  0
+             0  0  0 -2  0  0
+             0  0  1  2  4  0
+
+            The 16 sums are: -63, -34, -9, 12, -10, 0, 28, 23, -27, -11, -2, 10, 9, 17, 25, 18
+            The max sum is: 28, starting from Arr[1][3].{Environment.NewLine}";
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine(descr);
+            
+            var input = new int[6][];
+            for(int i = 0; i < 6; i++)
+            {
+                Console.WriteLine($"Enter row {i + 1}...");
+                input[i] = Array.ConvertAll(Console.ReadLine().Split(' '), tarr => Convert.ToInt32(tarr));
+            }
+            
+            sw.Start();
+            var result = TwoDArray.Handle(input);
+            sw.Stop();
+
+            Console.WriteLine($"Elapsed: {sw.Elapsed}");
+            Console.WriteLine($"The number of 'a' found is {result}.");
+        }
         static void weightedStrings(Stopwatch sw)
         {
             Console.Clear();
