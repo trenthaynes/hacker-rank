@@ -13,7 +13,7 @@ namespace weighted_uniform_strings
         static void Main(string[] args)
         {
             _sw = new Stopwatch();
-            
+
             Console.Clear();
             var done = false;
             do
@@ -98,14 +98,14 @@ namespace weighted_uniform_strings
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine(descr);
-            
+
             var input = new int[6][];
-            for(int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Console.WriteLine($"Enter row {i + 1}...");
                 input[i] = Array.ConvertAll(Console.ReadLine().Split(' '), tarr => Convert.ToInt32(tarr));
             }
-            
+
             sw.Start();
             var result = TwoDArray.Handle(input);
             sw.Stop();
@@ -187,12 +187,12 @@ namespace weighted_uniform_strings
             var strToProcess = Console.ReadLine();
             Console.WriteLine("the number of characters to consider...");
             int chrCount = Convert.ToInt32(Console.ReadLine());
-            
+
             sw.Start();
             var result = RepeatedString.Handle(strToProcess, chrCount);
             sw.Stop();
             Console.WriteLine($"Elapsed: {sw.Elapsed}");
             Console.WriteLine($"The number of 'a' found is {result}.");
         }
-    }    
+    }
 }
