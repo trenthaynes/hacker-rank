@@ -13,7 +13,6 @@ namespace weighted_uniform_strings
         static void Main(string[] args)
         {
             _sw = new Stopwatch();
-
             Console.Clear();
             var done = false;
             do
@@ -24,7 +23,7 @@ namespace weighted_uniform_strings
                 switch (optVal)
                 {
                     case ConsoleKey.NumPad0:
-                        twoDArray(_sw);
+                        rotateLeft(_sw);
                         break;
                     case ConsoleKey.NumPad1:
                         weightedStrings(_sw);
@@ -38,6 +37,10 @@ namespace weighted_uniform_strings
                     case ConsoleKey.NumPad4:
                         twoDArray(_sw);
                         break;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        rotateLeft(_sw);
+                        break;
                     case ConsoleKey.Escape:
                         done = true;
                         break;
@@ -50,11 +53,12 @@ namespace weighted_uniform_strings
         {
             var menuOpts = new Dictionary<string, int>
             {
-                {"Newest: 2D Array DS", 0},
+                {"Newest: Rotate Left", 0},
                 {"Weighted Uniform Strings", 1},
                 {"Jumping on Clouds", 2},
                 {"Repeated String", 3},
                 {"2D Array DS", 4},
+                {"Rotate Left", 5},
             };
 
             Console.WriteLine($"{Environment.NewLine}Enter a menu number:");
@@ -115,7 +119,7 @@ namespace weighted_uniform_strings
             sw.Stop();
 
             Console.WriteLine($"Elapsed: {sw.Elapsed}");
-            Console.WriteLine($"The rotated arrary is:{Environment.NewLine}{result}");
+            Console.WriteLine($"The rotated arrary is:{Environment.NewLine}{string.Join(' ', result)}");
         }
 
         static void twoDArray(Stopwatch sw)
