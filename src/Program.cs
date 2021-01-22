@@ -22,24 +22,33 @@ namespace weighted_uniform_strings
                 var optVal = Console.ReadKey(true).Key;
                 switch (optVal)
                 {
+                    case ConsoleKey.D0:
                     case ConsoleKey.NumPad0:
-                        rotateLeft(_sw);
+                        queueBribes(_sw);
                         break;
+                    case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
                         weightedStrings(_sw);
                         break;
+                    case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
                         jumpingClouds(_sw);
                         break;
+                    case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
                         repeatedString(_sw);
                         break;
+                    case ConsoleKey.D4:
                     case ConsoleKey.NumPad4:
                         twoDArray(_sw);
                         break;
                     case ConsoleKey.D5:
                     case ConsoleKey.NumPad5:
                         rotateLeft(_sw);
+                        break;
+                    case ConsoleKey.D6:
+                    case ConsoleKey.NumPad6:
+                        queueBribes(_sw);
                         break;
                     case ConsoleKey.Escape:
                         done = true;
@@ -53,12 +62,13 @@ namespace weighted_uniform_strings
         {
             var menuOpts = new Dictionary<string, int>
             {
-                {"Newest: Rotate Left", 0},
+                {"Newest: Queue Bribes", 0},
                 {"Weighted Uniform Strings", 1},
                 {"Jumping on Clouds", 2},
                 {"Repeated String", 3},
                 {"2D Array DS", 4},
                 {"Rotate Left", 5},
+                {"Queue Bribes", 6},
             };
 
             Console.WriteLine($"{Environment.NewLine}Enter a menu number:");
@@ -69,35 +79,75 @@ namespace weighted_uniform_strings
             Console.WriteLine("");
         }
 
+        static void queueBribes(Stopwatch sw)
+        {
+            var descr = @"
+*****     Rotate Array Left     *****
+            
+It is New Year's Day and people are in line for the Wonderland rollercoaster ride. Each person wears a sticker 
+indicating their initial position in the queue from 1 to N. Any person can bribe the person directly in front of 
+them to swap positions, but they still wear their original sticker. One person can bribe at most two others.
+
+Determine the minimum number of bribes that took place to get to a given queue order. Print the number of 
+bribes, or, if anyone has bribed more than two people, print 'Too chaotic'.
+            ";
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine(descr);
+
+            Console.WriteLine("Enter the number of test cases...");
+            var caseCnt = Convert.ToInt32(Console.ReadLine());
+            var input = new int[caseCnt][];
+            var output = new string[caseCnt];
+            for (int i = 0; i < caseCnt; i++)
+            {
+                Console.WriteLine($"Enter the length of the array for test case {i}...");
+                var cnt = Console.ReadLine();
+                Console.WriteLine($"Enter array for test case {i}...");
+                var temp = Array.ConvertAll(Console.ReadLine().Split(' '), tarr => Convert.ToInt32(tarr));
+                input[i] = temp;
+            }
+
+            sw.Start();
+            for (int i = 0; i < input.Length; i++)
+            {
+                output[i] = QueueBribes.Handle(input[i]);
+            }
+            sw.Stop();
+
+            Console.WriteLine($"Elapsed: {sw.Elapsed}");
+            Console.WriteLine($"The test case results:{Environment.NewLine}{string.Join('\n', output)}");
+        }
+
         static void rotateLeft(Stopwatch sw)
         {
             var descr = $@"
-            *****     Rotate Array Left     *****
+*****     Rotate Array Left     *****
 
-            Inputs:
-            #1 n d: the size of the array, number of left rotations
-            #2 arr: the initial array of integers (n integers, separated by a space)
-            
-            Constraints
-            1 <= n <= 10^5 (100,000)
-            1 <= d <= n
-            1 <= arr[i] <= 10^6 (1,000,000)
+Inputs:
+#1 n d: the size of the array, number of left rotations
+#2 arr: the initial array of integers (n integers, separated by a space)
 
-            Sample input:
-            5 4
-            1 2 3 4 5
+Constraints
+1 <= n <= 10^5 (100,000)
+1 <= d <= n
+1 <= arr[i] <= 10^6 (1,000,000)
 
-            Sample output:
-            5 1 2 3 4
+Sample input:
+5 4
+1 2 3 4 5
 
-            Explanation:
-            Perform d=4 left rotations of arr
+Sample output:
+5 1 2 3 4
 
-            Rotation result
-            1st: 2 3 4 5 1
-            2nd: 3 4 5 1 2
-            3rd  4 5 1 2 3
-            4th: 5 1 2 3 4
+Explanation:
+Perform d=4 left rotations of arr
+
+Rotation result
+1st: 2 3 4 5 1
+2nd: 3 4 5 1 2
+3rd  4 5 1 2 3
+4th: 5 1 2 3 4
             ";
             Console.Clear();
             Console.WriteLine("");
@@ -125,33 +175,33 @@ namespace weighted_uniform_strings
         static void twoDArray(Stopwatch sw)
         {
             var descr = $@"
-            *****     2D Array - DS     *****
-            Given a 6x6 2D array, Arr.
-            1 1 1 0 0 0
-            0 1 0 0 0 0
-            1 1 1 0 0 0
-            0 0 0 0 0 0
-            0 0 0 0 0 0
-            0 0 0 0 0 0
+*****     2D Array - DS     *****
+Given a 6x6 2D array, Arr.
+1 1 1 0 0 0
+0 1 0 0 0 0
+1 1 1 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
 
-            An hourglass in A is a subset of values with indices falling in this pattern in Arr's graphical representation.
-            a b c
-              d
-            e f g
+An hourglass in A is a subset of values with indices falling in this pattern in Arr's graphical representation.
+a b c
+    d
+e f g
 
-            There are 16 hourglass in Arr.  An hourglass sum is the sum of the values at each indices. Print the maximum hourglass sum in Arr.
-            The array will always be 6x6.
+There are 16 hourglass in Arr.  An hourglass sum is the sum of the values at each indices. Print the maximum hourglass sum in Arr.
+The array will always be 6x6.
 
-            Arr = 
-            -9 -9 -9  1  1  1
-             0 -9  0  4  3  2
-            -9 -9 -9  1  2  3
-             0  0  8  6  6  0
-             0  0  0 -2  0  0
-             0  0  1  2  4  0
+Arr = 
+-9 -9 -9  1  1  1
+    0 -9  0  4  3  2
+-9 -9 -9  1  2  3
+    0  0  8  6  6  0
+    0  0  0 -2  0  0
+    0  0  1  2  4  0
 
-            The 16 sums are: -63, -34, -9, 12, -10, 0, 28, 23, -27, -11, -2, 10, 9, 17, 25, 18
-            The max sum is: 28, starting from Arr[1][3].{Environment.NewLine}";
+The 16 sums are: -63, -34, -9, 12, -10, 0, 28, 23, -27, -11, -2, 10, 9, 17, 25, 18
+The max sum is: 28, starting from Arr[1][3].{Environment.NewLine}";
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine(descr);
@@ -175,9 +225,9 @@ namespace weighted_uniform_strings
             Console.Clear();
             Console.WriteLine("");
             var descr = @"
-            *****     WEIGHTED UNIFORM STRINGS     *****
-            Weigh and calc uniform strings in a provided string, determine which query values exist in the calculated uniform string weights.
-            ";
+*****     WEIGHTED UNIFORM STRINGS     *****
+Weigh and calc uniform strings in a provided string, determine which query values exist in the calculated uniform string weights.
+";
             Console.WriteLine(descr);
             Console.WriteLine("Enter the string to process and weigh...");
             var strToProcess = Console.ReadLine();
@@ -204,12 +254,12 @@ namespace weighted_uniform_strings
         static void jumpingClouds(Stopwatch sw)
         {
             var descr = $@"     
-            *****     JUMPING CLOUDS     *****
-            There is a new mobile game that starts with consecutively numbered clouds. Some of the clouds are thunderheads and others are cumulus.
-            The player can jump on any cumulus cloud having a number that is equal to the number of the current cloud plus 1 or 2.
-            The player must avoid the thunderheads. Determine the minimum number of jumps it will take to jump from the starting postion to the last cloud. 
-            It is always possible to win the game.
-            For each game, you will get an array of clouds numbered 0 if they are safe or 1 if they must be avoided.{Environment.NewLine}";
+*****     JUMPING CLOUDS     *****
+There is a new mobile game that starts with consecutively numbered clouds. Some of the clouds are thunderheads and others are cumulus.
+The player can jump on any cumulus cloud having a number that is equal to the number of the current cloud plus 1 or 2.
+The player must avoid the thunderheads. Determine the minimum number of jumps it will take to jump from the starting postion to the last cloud. 
+It is always possible to win the game.
+For each game, you will get an array of clouds numbered 0 if they are safe or 1 if they must be avoided.{Environment.NewLine}";
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine(descr);
@@ -232,11 +282,11 @@ namespace weighted_uniform_strings
         static void repeatedString(Stopwatch sw)
         {
             var descr = $@"
-            *****     REPEATED STRING     *****
-            There is a string, S, of lowercase English letters that is repeated infinitely many times. 
-            Given an integer, N, find and print the number of letter a's in the first  letters of the infinite string.
-            Example: S = 'abcac', N = 10
-            The substring we consider is 'abcacabcac', the first 10 characters of the infinite string. There are 4 occurrences of 'a; in the substring.{Environment.NewLine}";
+*****     REPEATED STRING     *****
+There is a string, S, of lowercase English letters that is repeated infinitely many times. 
+Given an integer, N, find and print the number of letter a's in the first  letters of the infinite string.
+Example: S = 'abcac', N = 10
+The substring we consider is 'abcacabcac', the first 10 characters of the infinite string. There are 4 occurrences of 'a; in the substring.{Environment.NewLine}";
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine(descr);
