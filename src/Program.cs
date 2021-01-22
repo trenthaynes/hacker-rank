@@ -65,6 +65,59 @@ namespace weighted_uniform_strings
             Console.WriteLine("");
         }
 
+        static void rotateLeft(Stopwatch sw)
+        {
+            var descr = $@"
+            *****     Rotate Array Left     *****
+
+            Inputs:
+            #1 n d: the size of the array, number of left rotations
+            #2 arr: the initial array of integers (n integers, separated by a space)
+            
+            Constraints
+            1 <= n <= 10^5 (100,000)
+            1 <= d <= n
+            1 <= arr[i] <= 10^6 (1,000,000)
+
+            Sample input:
+            5 4
+            1 2 3 4 5
+
+            Sample output:
+            5 1 2 3 4
+
+            Explanation:
+            Perform d=4 left rotations of arr
+
+            Rotation result
+            1st: 2 3 4 5 1
+            2nd: 3 4 5 1 2
+            3rd  4 5 1 2 3
+            4th: 5 1 2 3 4
+            ";
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine(descr);
+            Console.WriteLine("Enter the length of the array...");
+            var arrLen = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter the number of rotations...");
+            int rotates = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter array of numbers...");
+            int[] arr = new int[arrLen];
+            var qs = Console.ReadLine().Split(' ');
+            for (int i = 0; i < qs.Length; i++)
+            {
+                arr[i] = Convert.ToInt32(qs[i]);
+            }
+
+            sw.Start();
+            var result = ArrLeftRotation.Handle(arr, rotates);
+            sw.Stop();
+
+            Console.WriteLine($"Elapsed: {sw.Elapsed}");
+            Console.WriteLine($"The rotated arrary is:{Environment.NewLine}{result}");
+        }
+
         static void twoDArray(Stopwatch sw)
         {
             var descr = $@"
