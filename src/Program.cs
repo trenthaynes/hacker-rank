@@ -50,6 +50,10 @@ namespace weighted_uniform_strings
                     case ConsoleKey.NumPad6:
                         queueBribes(_sw);
                         break;
+                    case ConsoleKey.D7:
+                    case ConsoleKey.NumPad7:
+                        intersectionArrays(_sw);
+                        break;
                     case ConsoleKey.Escape:
                         done = true;
                         break;
@@ -62,13 +66,14 @@ namespace weighted_uniform_strings
         {
             var menuOpts = new Dictionary<string, int>
             {
-                {"Newest: Queue Bribes", 0},
+                {"Newest: Intersection of 3 Arrays", 0},
                 {"Weighted Uniform Strings", 1},
                 {"Jumping on Clouds", 2},
                 {"Repeated String", 3},
                 {"2D Array DS", 4},
                 {"Rotate Left", 5},
                 {"Queue Bribes", 6},
+                {"Intersection of 3 Arrays", 7},
             };
 
             Console.WriteLine($"{Environment.NewLine}Enter a menu number:");
@@ -77,6 +82,50 @@ namespace weighted_uniform_strings
                 Console.WriteLine($"{opt.Value}: {opt.Key}");
             }
             Console.WriteLine("");
+        }
+
+        static void intersectionArrays(Stopwatch sw)
+        {
+            var descr = @"
+*****     Intersection of 3 Arrays     *****
+            
+Find the intersection of 3 arrays
+            ";
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine(descr);
+
+            Console.WriteLine("Enter the number of test cases...");
+            var caseCnt = Convert.ToInt32(Console.ReadLine());
+            var input = new int[(caseCnt * 3) - 1][];
+            var output = new int[caseCnt - 1][];
+            for (int i = 0; i < caseCnt; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    var idx = i * 3 + j;
+                    Console.WriteLine($"Enter array {j + 1} for test {(i + 1)}...");
+                    input[idx] = Array.ConvertAll(Console.ReadLine().Split(' '), tarr => Convert.ToInt32(tarr));
+                }
+            }
+
+            sw.Start();
+            for (int i = 0; i < caseCnt; i++)
+            {
+                var a1 = input[(i * 3)];
+                var a2 = input[(i * 3 + 1)];
+                var a3 = input[(i * 3 + 2)];
+                output[i] = IntersectionOf3Arrays.Handle(a1, a2, a3);
+            }
+            sw.Stop();
+
+            Console.WriteLine($"Elapsed: {sw.Elapsed}");
+            var msg = string.Empty;
+            foreach (var arr in output)
+            {
+                msg += $"{(string.Join(",", arr))}\n";
+            }
+            Console.WriteLine($"The test case results:{Environment.NewLine}{string.Join('\n', msg)}");
         }
 
         static void queueBribes(Stopwatch sw)

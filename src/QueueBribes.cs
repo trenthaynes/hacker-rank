@@ -22,7 +22,7 @@ public static class QueueBribes
         3
         Too chaotic
     
-    Explanation:
+    Explanation: 
 
     Test Case #1 - Initial state 
     1, 2, 3, 4, 5
@@ -42,8 +42,21 @@ public static class QueueBribes
     */
     public static string Handle(int[] q)
     {
+        const string chaotic = "Too chaotic";
+        var bribes = 0;
+        for (int i = 0; i < q.Length; i++)
+        {
+            var dif = (q[i] - (i + 1)) >= 0 ? (q[i] - (i + 1)) : 0;
+            if (dif < 3)
+            {
+                bribes += dif;
+            }
+            else
+            {
+                return chaotic;
+            }
+        }
 
-
-        return string.Empty;
+        return bribes.ToString();
     }
 }
