@@ -9,24 +9,50 @@ public static class IntersectionOf3Arrays
         return find_intersection(a.ToList(), b.ToList(), c.ToList()).ToArray();
     }
 
+    public static List<int> Handle(List<int> a, List<int> b, List<int> c)
+    {
+        return find_intersection(a, b, c);
+    }
+
     private static List<int> find_intersection(List<int> arr1, List<int> arr2, List<int> arr3)
     {
         var arrI = new List<int>();
         var a1 = arr1.Count;
         var a2 = arr2.Count;
         var a3 = arr3.Count;
+        var useBin = true;
 
-        if (a1 < a2 && a1 < a3)
+        if (a1 == 0 || a2 == 0 || a3 == 0)
         {
-            if (a2 < a3)
+            return new List<int> { -1 };
+        }
+
+
+        if (a1 <= 10 || a2 <= 10 || a3 <= 10)
+        {
+            useBin = false;
+        }
+
+        if (a1 <= a2 && a1 <= a3)
+        {
+            if (a2 <= a3)
             {
                 // 1, 2, 3
-                arrI = get_intersection(arr1, arr2);
+                arrI = (useBin) ? get_intersection_binary(arr1, arr3) : get_intersection_linear(arr1, arr3);
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
                 }
-                arrI = get_intersection(arrI, arr3);
+
+                if (arrI.Count >= a2)
+                {
+                    arrI = (useBin) ? get_intersection_binary(arr2, arrI) : get_intersection_linear(arr2, arrI);
+                }
+                else
+                {
+                    arrI = (useBin) ? get_intersection_binary(arrI, arr2) : get_intersection_linear(arrI, arr2);
+                }
+
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
@@ -36,12 +62,21 @@ public static class IntersectionOf3Arrays
             else
             {
                 // 1, 3, 2
-                arrI = get_intersection(arr1, arr3);
+                arrI = (useBin) ? get_intersection_binary(arr1, arr2) : get_intersection_linear(arr1, arr2);
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
                 }
-                arrI = get_intersection(arrI, arr2);
+
+                if (arrI.Count >= a3)
+                {
+                    arrI = (useBin) ? get_intersection_binary(arr3, arrI) : get_intersection_linear(arr3, arrI);
+                }
+                else
+                {
+                    arrI = (useBin) ? get_intersection_binary(arrI, arr3) : get_intersection_linear(arrI, arr3);
+                }
+
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
@@ -50,17 +85,26 @@ public static class IntersectionOf3Arrays
             }
         }
 
-        if (a2 < arr1.Count && a2 < a3)
+        if (a2 <= a1 && a2 <= a3)
         {
-            if (a1 < a3)
+            if (a1 <= a3)
             {
                 // 2, 1, 3
-                arrI = get_intersection(arr2, arr1);
+                arrI = (useBin) ? get_intersection_binary(arr2, arr3) : get_intersection_linear(arr2, arr3);
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
                 }
-                arrI = get_intersection(arrI, arr3);
+
+                if (arrI.Count >= a1)
+                {
+                    arrI = (useBin) ? get_intersection_binary(arr1, arrI) : get_intersection_linear(arr1, arrI);
+                }
+                else
+                {
+                    arrI = (useBin) ? get_intersection_binary(arrI, arr1) : get_intersection_linear(arrI, arr1);
+                }
+
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
@@ -70,12 +114,21 @@ public static class IntersectionOf3Arrays
             else
             {
                 // 2, 3, 1
-                arrI = get_intersection(arr2, arr3);
+                arrI = (useBin) ? get_intersection_binary(arr2, arr1) : get_intersection_linear(arr2, arr1);
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
                 }
-                arrI = get_intersection(arrI, arr1);
+
+                if (arrI.Count >= a2)
+                {
+                    arrI = (useBin) ? get_intersection_binary(arr3, arrI) : get_intersection_linear(arr3, arrI);
+                }
+                else
+                {
+                    arrI = (useBin) ? get_intersection_binary(arrI, arr3) : get_intersection_linear(arrI, arr3);
+                }
+
                 if (arrI.Count == 0)
                 {
                     return new List<int> { -1 };
@@ -84,15 +137,24 @@ public static class IntersectionOf3Arrays
             }
         }
 
-        if (a2 < a1)
+        if (a2 <= a1)
         {
             // 3, 2, 1
-            arrI = get_intersection(arr3, arr2);
+            arrI = (useBin) ? get_intersection_binary(arr3, arr1) : get_intersection_linear(arr3, arr1);
             if (arrI.Count == 0)
             {
                 return new List<int> { -1 };
             }
-            arrI = get_intersection(arrI, arr1);
+
+            if (arrI.Count >= a2)
+            {
+                arrI = (useBin) ? get_intersection_binary(arr2, arrI) : get_intersection_linear(arr2, arrI);
+            }
+            else
+            {
+                arrI = (useBin) ? get_intersection_binary(arrI, arr2) : get_intersection_linear(arrI, arr2);
+            }
+
             if (arrI.Count == 0)
             {
                 return new List<int> { -1 };
@@ -102,12 +164,22 @@ public static class IntersectionOf3Arrays
         else
         {
             // 3, 1, 2
-            arrI = get_intersection(arr3, arr1);
+            arrI = get_intersection_binary(arr3, arr2);
+            arrI = (useBin) ? get_intersection_binary(arr3, arr2) : get_intersection_linear(arr3, arr2);
             if (arrI.Count == 0)
             {
                 return new List<int> { -1 };
             }
-            arrI = get_intersection(arrI, arr2);
+
+            if (arrI.Count >= a1)
+            {
+                arrI = (useBin) ? get_intersection_binary(arr1, arrI) : get_intersection_linear(arr1, arrI);
+            }
+            else
+            {
+                arrI = (useBin) ? get_intersection_binary(arrI, arr1) : get_intersection_linear(arrI, arr1);
+            }
+
             if (arrI.Count == 0)
             {
                 return new List<int> { -1 };
@@ -117,7 +189,35 @@ public static class IntersectionOf3Arrays
 
     }
 
-    private static List<int> get_intersection(List<int> a1, List<int> a2)
+    private static List<int> get_intersection_linear(List<int> a, List<int> b)
+    {
+        var tmpSet = new List<int>();
+        var idxA = 0;
+        var idxB = 0;
+        var lenA = a.Count;
+        var lenB = b.Count;
+
+        while (idxA < lenA && idxB < lenB)
+        {
+            if (a[idxA] < b[idxB])
+            {
+                idxA++;
+            }
+            else if (a[idxA] > b[idxB])
+            {
+                idxB++;
+            }
+            else
+            {
+                tmpSet.Add(a[idxA]);
+                idxA++;
+                idxB++;
+            }
+        }
+        return tmpSet;
+    }
+
+    private static List<int> get_intersection_binary(List<int> a1, List<int> a2)
     {
         var tmpSet = new List<int>();
         var i = 0;
@@ -139,6 +239,7 @@ public static class IntersectionOf3Arrays
                 tmpSet.Add(val);
                 start = result + 1;
             }
+            i++;
         }
 
         return tmpSet;

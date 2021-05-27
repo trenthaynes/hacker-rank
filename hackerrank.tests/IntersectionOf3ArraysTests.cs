@@ -17,59 +17,114 @@ namespace hackerrank.tests
             _loc = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location.Replace("bin\\Debug\\netcoreapp3.1", string.Empty));
         }
 
+        public struct TestResult
+        {
+            public int[] TestOutput;
+            public int[] TestAnswer;
+        }
+
         [Fact]
-        public void Test1()
+        public void Test3()
         {
             var sw = new Stopwatch();
 
             string path = Path.Combine(_loc, @"intersection-arrays");
-            var files = Directory.EnumerateFiles(path, "*.1.txt");
+            var testFile = Directory.EnumerateFiles(path, "test21.txt").FirstOrDefault();
+            var answerFile = Directory.EnumerateFiles(path, "answer21.txt").FirstOrDefault();
+            var answer = new int[0];
+            var arr1 = new int[0];
+            var arr2 = new int[0];
+            var arr3 = new int[0];
+            var arrSize = 0;
+            int cntr;
+            string line;
+            string sizeStr;
 
-            var testFile = files.First(f => Path.GetFileName(f).Contains("test"));
-            var ansrFile = files.First(f => Path.GetFileName(f).Contains("answer"));
-
-            sw.Start();
-            Console.WriteLine($"processing {testFile}");
-
-            var allLines = File.ReadAllLines(testFile);
-            var inputArrs = new int[2][];
-            var iaCnt = 0;
-
-            for (int i = 0; i < allLines.Length; i++)
+            using (var fileStream = File.OpenRead(answerFile))
             {
-                var str = allLines[i];
-                var cnt = Convert.ToInt32(str);
-                int[] arr;
-                if (cnt != 0)
+                using (var streamReader = new StreamReader(fileStream))
                 {
-
-                    i++;
-                    arr = Array.ConvertAll(allLines[i].Split(' '), tarr => Convert.ToInt32(tarr));
-                }
-                else
-                {
-                    arr = new int[0];
-                }
-                inputArrs[iaCnt] = arr;
-                if (i != 0 || i % 2 != 0)
-                {
-                    iaCnt++;
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        answer = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                answer[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
                 }
             }
 
-            var output = (IntersectionOf3Arrays.Handle(inputArrs[0], inputArrs[1], inputArrs[2])).ToList();
+            using (var fileStream = File.OpenRead(testFile))
+            {
+                using (var streamReader = new StreamReader(fileStream))
+                {
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr1 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr1[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
 
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr2 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr2[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr3 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr3[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+                }
+            }
+
+            sw.Start();
+            var output = IntersectionOf3Arrays.Handle(arr1, arr2, arr3).ToArray();
             sw.Stop();
-            Console.WriteLine($"Elapsed: {sw.Elapsed}");
-            sw.Reset();
-            var answers = File.ReadAllLines(ansrFile);
-
+            Console.WriteLine($"Test 21 - Elapsed: {sw.Elapsed}");
+            var aLen = answer.Length;
+            var oLen = output.Length;
             output.ShouldSatisfyAllConditions(
+                () => aLen.Equals(oLen).ShouldBeTrue(),
                 () =>
                 {
-                    foreach (var item in output)
+                    for (var i = 0; i < aLen; i++)
                     {
-                        item.ShouldNotBe(0);
+                        (answer[i] == output[i]).ShouldBeTrue($"i:{i}, answer[i]:{answer[i]}, output[1]:{output[i]}");
                     }
                 }
             );
@@ -80,81 +135,261 @@ namespace hackerrank.tests
         {
             var sw = new Stopwatch();
 
-            string path = Path.Combine(_loc, @"weighted-strings");
-            var files = Directory.EnumerateFiles(path, "*.2.txt");
+            string path = Path.Combine(_loc, @"intersection-arrays");
+            var testFile = Directory.EnumerateFiles(path, "test20.txt").FirstOrDefault();
+            var answerFile = Directory.EnumerateFiles(path, "answer20.txt").FirstOrDefault();
+            var answer = new int[0];
+            var arr1 = new int[0];
+            var arr2 = new int[0];
+            var arr3 = new int[0];
+            var arrSize = 0;
+            int cntr;
+            string line;
+            string sizeStr;
 
-            var testFile = files.First(f => Path.GetFileName(f).Contains("test"));
-            var ansrFile = files.First(f => Path.GetFileName(f).Contains("answer"));
+            using (var fileStream = File.OpenRead(answerFile))
+            {
+                using (var streamReader = new StreamReader(fileStream))
+                {
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        answer = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                answer[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+                }
+            }
+
+            using (var fileStream = File.OpenRead(testFile))
+            {
+                using (var streamReader = new StreamReader(fileStream))
+                {
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr1 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr1[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr2 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr2[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr3 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr3[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+                }
+            }
 
             sw.Start();
-            Console.WriteLine($"processing {testFile}");
-            var input = File.ReadAllLines(testFile);
-            Console.WriteLine($"Total Queries: {input.Length - 1}");
-            var str = input[0];
-            var cnt = Convert.ToInt32(input[1]);
-            var qs = new List<int>();
-            for (var j = 2; j < input.Length; j++)
-            {
-                qs.Add(Convert.ToInt32(input[j]));
-            }
-            var result = WeightedString.Handle(str, qs.ToArray());
-
+            var output = IntersectionOf3Arrays.Handle(arr1, arr2, arr3).ToArray();
             sw.Stop();
-            Console.WriteLine($"Elapsed: {sw.Elapsed}");
-            sw.Reset();
-            var answers = File.ReadAllLines(ansrFile);
-
-            result.ShouldSatisfyAllConditions(
-                () => result.Length.ShouldBe(cnt),
+            Console.WriteLine($"Test 20 - Elapsed: {sw.Elapsed}");
+            var aLen = answer.Length;
+            var oLen = output.Length;
+            output.ShouldSatisfyAllConditions(
+                () => aLen.Equals(oLen).ShouldBeTrue(),
                 () =>
                 {
-                    for (int i = 0; i < result.Length; i++)
+                    for (var i = 0; i < aLen; i++)
                     {
-                        result[i].ShouldBe(answers[i]);
+                        answer[i].Equals(output[i]).ShouldBeTrue();
                     }
                 }
             );
         }
 
         [Fact]
-        public void Test3()
+        public void Test()
         {
             var sw = new Stopwatch();
 
-            string path = Path.Combine(_loc, @"weighted-strings");
-            var files = Directory.EnumerateFiles(path, "*.3.txt");
+            string path = Path.Combine(_loc, @"intersection-arrays");
+            var testFiles = Directory.EnumerateFiles(path, "test.??.txt");
+            var results = new Dictionary<int, TestResult>();
+            int[] answer;
+            var list1 = new List<int>();
+            var list2 = new List<int>();
+            var list3 = new List<int>();
+            var testCount = 1;
 
-            var testFile = files.First(f => Path.GetFileName(f).Contains("test"));
-            var ansrFile = files.First(f => Path.GetFileName(f).Contains("answer"));
-
-            sw.Start();
-            Console.WriteLine($"processing {testFile}");
-            var input = File.ReadAllLines(testFile);
-            Console.WriteLine($"Total Queries: {input.Length - 1}");
-            var str = input[0];
-            var cnt = Convert.ToInt32(input[1]);
-            var qs = new List<int>();
-            for (var j = 2; j < input.Length; j++)
+            foreach (var test in testFiles)
             {
-                qs.Add(Convert.ToInt32(input[j]));
-            }
-            var result = WeightedString.Handle(str, qs.ToArray());
+                var testNum = test.Substring(test.Length - 6, 2);
+                Console.WriteLine($"processing Test {testNum}");
+                var allLines = File.ReadAllLines(test);
+                var idx = 0;
+                var lineCount = allLines.Length;
 
-            sw.Stop();
-            Console.WriteLine($"Elapsed: {sw.Elapsed}");
-            sw.Reset();
-            var answers = File.ReadAllLines(ansrFile);
+                int arrSize = 0;
+                var inputList = new Dictionary<int, int[]>();
+                var isArr = false;
+                var arrCnt = 1;
 
-            result.ShouldSatisfyAllConditions(
-                () => result.Length.ShouldBe(cnt),
-                () =>
+                if (lineCount == 0)
                 {
-                    for (int i = 0; i < result.Length; i++)
+                    Console.WriteLine($"Skipping Test {testNum}");
+                    testCount++;
+                    continue;
+                }
+
+                if (lineCount == 4)
+                {
+                    inputList.Add(1, null);
+                    inputList.Add(2, null);
+                    inputList.Add(3, null);
+                    inputList.Add(4, new int[] { -1 });
+                }
+
+                var line = allLines[idx];
+                if (lineCount > 4)
+                {
+                    //  line 0
+                    if (idx == 0)
                     {
-                        result[i].ShouldBe(answers[i]);
+                        //  arr 1 size
+                        Int32.TryParse(line, out arrSize);
+                        idx++;
+                    }
+
+                    //  line 1
+                    if (idx == 1)
+                    {
+                        //  if arr size 0, there is no array to populate
+                        if (arrSize > 0)
+                        {
+                            // this line is an array
+                            line = allLines[idx];
+                            inputList.Add(arrCnt, Array.ConvertAll(line.Split(' '), tarr => Convert.ToInt32(tarr)));
+                        }
+                        else
+                        {
+                            // this line is actually next array size
+                            Int32.TryParse(line, out arrSize);
+                            // Add an empty arr for this ine
+                            inputList.Add(arrCnt, null);
+                            isArr = true;
+                        }
+                        idx++;
+                        arrCnt++;
+                    }
+
+                    while (idx < lineCount)
+                    {
+                        //  get the line   
+                        line = allLines[idx];
+                        if (!isArr)
+                        {
+                            // this is the answer array
+                            if (idx == lineCount - 1)
+                            {
+                                inputList.Add(arrCnt, Array.ConvertAll(line.Split(','), tarr => Convert.ToInt32(tarr)));
+                            }
+                            else  // this is array size
+                            {
+                                Int32.TryParse(line, out arrSize);
+                                isArr = true;
+                            }
+                        }
+                        else
+                        {
+                            if (arrSize > 0)
+                            {
+                                // this line is an array
+                                inputList.Add(arrCnt, Array.ConvertAll(line.Split(' '), tarr => Convert.ToInt32(tarr)));
+                                isArr = false;
+                            }
+                            else
+                            {
+                                // this line is actually next array size
+                                Int32.TryParse(line, out arrSize);
+                                // Add an empty arr for this ine
+                                inputList.Add(arrCnt, null);
+                                isArr = true;
+                            }
+                            arrCnt++;
+                        }
+                        idx++;
                     }
                 }
-            );
+
+                for (int i = 1; i < 4; i++)
+                {
+                    var tmp = inputList.FirstOrDefault(il => il.Key == i).Value;
+                    if (i == 1)
+                    {
+                        list1 = tmp != null ? tmp.ToList() : new List<int>();
+                        continue;
+                    }
+                    if (i == 2)
+                    {
+                        list2 = tmp != null ? tmp.ToList() : new List<int>();
+                        continue;
+                    }
+                    list3 = tmp != null ? tmp.ToList() : new List<int>();
+                }
+                answer = inputList.FirstOrDefault(i => i.Key == 4).Value;
+                sw.Start();
+                var output = IntersectionOf3Arrays.Handle(list1, list2, list3).ToArray();
+                sw.Stop();
+                Console.WriteLine($"Test {testNum} - Elapsed: {sw.Elapsed}");
+                var tResult = new TestResult { TestAnswer = answer, TestOutput = output };
+                results.Add(testCount, tResult);
+                sw.Reset();
+                testCount++;
+            }
+
+            foreach (var result in results)
+            {
+                Console.WriteLine($"Results for Test {result.Key} \n Test Output:[{(string.Join(",", result.Value.TestOutput))}] \n Test Answer:[{(string.Join(",", result.Value.TestAnswer))}]");
+                result.ShouldSatisfyAllConditions(
+                    () =>
+                    {
+                        foreach (var item in result.Value.TestOutput)
+                        {
+                            result.Value.TestAnswer.Contains(item).ShouldBeTrue();
+                        }
+                    }
+                );
+            }
         }
     }
 }

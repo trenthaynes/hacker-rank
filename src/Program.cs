@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -115,7 +116,7 @@ Find the intersection of 3 arrays
                 var a1 = input[(i * 3)];
                 var a2 = input[(i * 3 + 1)];
                 var a3 = input[(i * 3 + 2)];
-                output[i] = IntersectionOf3Arrays.Handle(a1, a2, a3);
+                output[i] = (IntersectionOf3Arrays.Handle(a1.ToList(), a2.ToList(), a3.ToList())).ToArray();
             }
             sw.Stop();
 
