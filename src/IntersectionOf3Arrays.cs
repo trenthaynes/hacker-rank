@@ -224,12 +224,13 @@ public static class IntersectionOf3Arrays
         var len = a1.Count;
         var start = 0;
         var fin = a2.Count;
+        var cntr = 1;
 
         // linear against a1, binary against a2
         while (i < len)
         {
             var val = a1[i];
-            var result = bsearch(a2, start, fin, val);
+            var result = bsearch(a2, start, fin, val, cntr, i);
             if (result == -1)
             {
                 start = 0;
@@ -245,8 +246,9 @@ public static class IntersectionOf3Arrays
         return tmpSet;
     }
 
-    private static int bsearch(List<int> arr, int low, int high, int val)
+    private static int bsearch(List<int> arr, int low, int high, int val, int cntr, int idx)
     {
+        cntr++;
         var mid = -1;
         if (high >= low)
         {
@@ -258,10 +260,10 @@ public static class IntersectionOf3Arrays
 
             if (arr[mid] > val)
             {
-                return bsearch(arr, low, mid - 1, val);
+                return bsearch(arr, low, mid - 1, val, cntr, idx);
             }
 
-            return bsearch(arr, mid + 1, high, val);
+            return bsearch(arr, mid + 1, high, val, cntr, idx);
         }
         return -1;
     }

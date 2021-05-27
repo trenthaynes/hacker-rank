@@ -24,14 +24,15 @@ namespace hackerrank.tests
         }
 
         [Fact]
-        public void Test3()
+        public void Test_22()
         {
             var sw = new Stopwatch();
 
             string path = Path.Combine(_loc, @"intersection-arrays");
-            var testFile = Directory.EnumerateFiles(path, "test21.txt").FirstOrDefault();
-            var answerFile = Directory.EnumerateFiles(path, "answer21.txt").FirstOrDefault();
+            var testFile = Directory.EnumerateFiles(path, "test22.txt").FirstOrDefault();
+            var answerFile = Directory.EnumerateFiles(path, "answer22.txt").FirstOrDefault();
             var answer = new int[0];
+            var answerTmp = new List<int>();
             var arr1 = new int[0];
             var arr2 = new int[0];
             var arr3 = new int[0];
@@ -44,20 +45,110 @@ namespace hackerrank.tests
             {
                 using (var streamReader = new StreamReader(fileStream))
                 {
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        answerTmp.Add(Int32.Parse(line));
+                    }
+                    answer = answerTmp.ToArray();
+                }
+            }
+
+            using (var fileStream = File.OpenRead(testFile))
+            {
+                using (var streamReader = new StreamReader(fileStream))
+                {
                     sizeStr = streamReader.ReadLine();
                     if (sizeStr != null)
                     {
                         Int32.TryParse(sizeStr, out arrSize);
-                        answer = new int[arrSize];
+                        arr1 = new int[arrSize];
                         for (cntr = 0; cntr < arrSize; cntr++)
                         {
                             line = streamReader.ReadLine();
                             if (line != null)
                             {
-                                answer[cntr] = Int32.Parse(line);
+                                arr1[cntr] = Int32.Parse(line);
                             }
                         }
                     }
+
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr2 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr2[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+
+                    sizeStr = streamReader.ReadLine();
+                    if (sizeStr != null)
+                    {
+                        Int32.TryParse(sizeStr, out arrSize);
+                        arr3 = new int[arrSize];
+                        for (cntr = 0; cntr < arrSize; cntr++)
+                        {
+                            line = streamReader.ReadLine();
+                            if (line != null)
+                            {
+                                arr3[cntr] = Int32.Parse(line);
+                            }
+                        }
+                    }
+                }
+            }
+
+            sw.Start();
+            var output = IntersectionOf3Arrays.Handle(arr1, arr2, arr3).ToArray();
+            sw.Stop();
+            Console.WriteLine($"Test 22 - Elapsed: {sw.Elapsed}");
+            var aLen = answer.Length;
+            var oLen = output.Length;
+            output.ShouldSatisfyAllConditions(
+                () => aLen.Equals(oLen).ShouldBeTrue($"aLen:{aLen}, oLen:{oLen}"),
+                () =>
+                {
+                    for (var i = 0; i < aLen; i++)
+                    {
+                        (answer[i] == output[i]).ShouldBeTrue($"i:{i}, answer[i]:{answer[i]}, output[1]:{output[i]}");
+                    }
+                }
+            );
+        }
+
+        [Fact]
+        public void Test_21()
+        {
+            var sw = new Stopwatch();
+
+            string path = Path.Combine(_loc, @"intersection-arrays");
+            var testFile = Directory.EnumerateFiles(path, "test21.txt").FirstOrDefault();
+            var answerFile = Directory.EnumerateFiles(path, "answer21.txt").FirstOrDefault();
+            var answer = new int[0];
+            var answerTmp = new List<int>();
+            var arr1 = new int[0];
+            var arr2 = new int[0];
+            var arr3 = new int[0];
+            var arrSize = 0;
+            int cntr;
+            string line;
+            string sizeStr;
+
+            using (var fileStream = File.OpenRead(answerFile))
+            {
+                using (var streamReader = new StreamReader(fileStream))
+                {
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        answerTmp.Add(Int32.Parse(line));
+                    }
+                    answer = answerTmp.ToArray();
                 }
             }
 
@@ -119,7 +210,7 @@ namespace hackerrank.tests
             var aLen = answer.Length;
             var oLen = output.Length;
             output.ShouldSatisfyAllConditions(
-                () => aLen.Equals(oLen).ShouldBeTrue(),
+                () => aLen.Equals(oLen).ShouldBeTrue($"aLen:{aLen}, oLen:{oLen}"),
                 () =>
                 {
                     for (var i = 0; i < aLen; i++)
@@ -131,7 +222,7 @@ namespace hackerrank.tests
         }
 
         [Fact]
-        public void Test2()
+        public void Test_20()
         {
             var sw = new Stopwatch();
 
@@ -139,6 +230,7 @@ namespace hackerrank.tests
             var testFile = Directory.EnumerateFiles(path, "test20.txt").FirstOrDefault();
             var answerFile = Directory.EnumerateFiles(path, "answer20.txt").FirstOrDefault();
             var answer = new int[0];
+            var answerTmp = new List<int>();
             var arr1 = new int[0];
             var arr2 = new int[0];
             var arr3 = new int[0];
@@ -151,20 +243,11 @@ namespace hackerrank.tests
             {
                 using (var streamReader = new StreamReader(fileStream))
                 {
-                    sizeStr = streamReader.ReadLine();
-                    if (sizeStr != null)
+                    while ((line = streamReader.ReadLine()) != null)
                     {
-                        Int32.TryParse(sizeStr, out arrSize);
-                        answer = new int[arrSize];
-                        for (cntr = 0; cntr < arrSize; cntr++)
-                        {
-                            line = streamReader.ReadLine();
-                            if (line != null)
-                            {
-                                answer[cntr] = Int32.Parse(line);
-                            }
-                        }
+                        answerTmp.Add(Int32.Parse(line));
                     }
+                    answer = answerTmp.ToArray();
                 }
             }
 
@@ -226,12 +309,12 @@ namespace hackerrank.tests
             var aLen = answer.Length;
             var oLen = output.Length;
             output.ShouldSatisfyAllConditions(
-                () => aLen.Equals(oLen).ShouldBeTrue(),
+                () => aLen.Equals(oLen).ShouldBeTrue($"aLen:{aLen}, oLen:{oLen}"),
                 () =>
                 {
                     for (var i = 0; i < aLen; i++)
                     {
-                        answer[i].Equals(output[i]).ShouldBeTrue();
+                        (answer[i] == output[i]).ShouldBeTrue($"i:{i}, answer[i]:{answer[i]}, output[1]:{output[i]}");
                     }
                 }
             );
