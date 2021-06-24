@@ -23,10 +23,6 @@ namespace weighted_uniform_strings
                 var optVal = Console.ReadKey(true).Key;
                 switch (optVal)
                 {
-                    case ConsoleKey.D0:
-                    case ConsoleKey.NumPad0:
-                        queueBribes(_sw);
-                        break;
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
                         weightedStrings(_sw);
@@ -55,6 +51,14 @@ namespace weighted_uniform_strings
                     case ConsoleKey.NumPad7:
                         intersectionArrays(_sw);
                         break;
+                    case ConsoleKey.D8:
+                    case ConsoleKey.NumPad8:
+                        twoSumInArray(_sw);
+                        break;
+                    case ConsoleKey.D9:
+                    case ConsoleKey.NumPad9:
+                        twoSumInSortedArray(_sw);
+                        break;
                     case ConsoleKey.Escape:
                         done = true;
                         break;
@@ -67,7 +71,6 @@ namespace weighted_uniform_strings
         {
             var menuOpts = new Dictionary<string, int>
             {
-                {"Newest: Intersection of 3 Arrays", 0},
                 {"Weighted Uniform Strings", 1},
                 {"Jumping on Clouds", 2},
                 {"Repeated String", 3},
@@ -75,6 +78,8 @@ namespace weighted_uniform_strings
                 {"Rotate Left", 5},
                 {"Queue Bribes", 6},
                 {"Intersection of 3 Arrays", 7},
+                {"2 Sum in an Array", 8},
+                {"2 Sum in a Sorted Array", 9},
             };
 
             Console.WriteLine($"{Environment.NewLine}Enter a menu number:");
@@ -84,6 +89,113 @@ namespace weighted_uniform_strings
             }
             Console.WriteLine("");
         }
+
+        static void twoSumInArray(Stopwatch sw)
+        {
+            var descr = @"
+Given an array and a target number, find the indices of the two values from the array that sum up to the given target number.
+The function returns an array of size two where the two elements specify the input array indices whose values sum up to the given target number.
+In case when no answer exists, return an array of size two with both values equal to -1, i.e., [-1, -1].
+In case when multiple answers exist, you may return any of them.
+The order of the returned indices does not matter. 
+A single index cannot be used twice.
+
+Input: [5, 3, 10, 45, 1], 6
+Output: [0, 4]
+
+Input: [4, 1, 5, 0, -1], 10
+Output: [-1, -1]
+            ";
+
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine(descr);
+
+            Console.WriteLine("Enter the number of test cases...");
+            var caseCnt = Convert.ToInt32(Console.ReadLine());
+            var input = new List<(int, int[])>();
+            var output = new List<PrintResult>();
+            for (int i = 0; i < caseCnt; i++)
+            {
+                Console.WriteLine($"Enter the target value for test case {i}...");
+                var target = Console.ReadLine();
+                Console.WriteLine($"Enter array for test case {i}...");
+                var temp = Array.ConvertAll(Console.ReadLine().Split(' '), tarr => Convert.ToInt32(tarr));
+                input.Add((Convert.ToInt32(target), temp));
+            }
+
+            for (int i = 0; i < input.Count; i++)
+            {
+                sw.Start();
+                var result = TwoSumInArray.Handle(input[i].Item2, input[i].Item1);
+                sw.Stop();
+                output.Add(new PrintResult
+                {
+                    Elapsed = sw.Elapsed,
+                    Result = string.Join(",", result)
+                });
+            }
+
+            var sb = new StringBuilder();
+            foreach (var item in output)
+            {
+                sb.AppendLine($"Elapsed: {item.Elapsed} - Result: [{item.Result}]");
+            }
+            Console.WriteLine($"The test case results:{Environment.NewLine}{string.Join('\n', sb.ToString())}");
+        }
+
+        static void twoSumInSortedArray(Stopwatch sw)
+        {
+            var descr = @"
+Given an array sorted in non-decreasing order and a target number, find the indices of the two values from the array that sum up to the given target number.
+The function returns an array of size two where the two elements specify the input array indices whose values sum up to the given target number.
+In case when no answer exists, return an array of size two with both values equal to -1, i.e., [-1, -1].
+In case when multiple answers exist, you may return any of them.
+The order of the indices returned does not matter. 
+A single index cannot be used twice.
+
+Input: [1, 2, 3, 5, 10], 7
+Output: [1, 3]
+Sum of the elements at index 1 and 3 is 7.
+            ";
+
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine(descr);
+
+            Console.WriteLine("Enter the number of test cases...");
+            var caseCnt = Convert.ToInt32(Console.ReadLine());
+            var input = new List<(int, int[])>();
+            var output = new List<PrintResult>();
+            for (int i = 0; i < caseCnt; i++)
+            {
+                Console.WriteLine($"Enter the target value for test case {i}...");
+                var target = Console.ReadLine();
+                Console.WriteLine($"Enter array for test case {i}...");
+                var temp = Array.ConvertAll(Console.ReadLine().Split(' '), tarr => Convert.ToInt32(tarr));
+                input.Add((Convert.ToInt32(target), temp));
+            }
+
+            for (int i = 0; i < input.Count; i++)
+            {
+                sw.Start();
+                var result = TwoSumInArray.Handle(input[i].Item2, input[i].Item1);
+                sw.Stop();
+                output.Add(new PrintResult
+                {
+                    Elapsed = sw.Elapsed,
+                    Result = string.Join(",", result)
+                });
+            }
+
+            var sb = new StringBuilder();
+            foreach (var item in output)
+            {
+                sb.AppendLine($"Elapsed: {item.Elapsed} - Result: [{item.Result}]");
+            }
+            Console.WriteLine($"The test case results:{Environment.NewLine}{string.Join('\n', sb.ToString())}");
+        }
+
 
         static void intersectionArrays(Stopwatch sw)
         {

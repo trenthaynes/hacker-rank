@@ -224,13 +224,13 @@ public static class IntersectionOf3Arrays
         var len = a1.Count;
         var start = 0;
         var fin = a2.Count;
-        var cntr = 1;
 
         // linear against a1, binary against a2
         while (i < len)
         {
             var val = a1[i];
-            var result = bsearch(a2, start, fin, val, cntr, i);
+            Console.WriteLine($"start:{start}, fin:{fin}, val:{val}");
+            var result = a2.BinarySearch(start, fin - start, val, null);
             if (result == -1)
             {
                 start = 0;
